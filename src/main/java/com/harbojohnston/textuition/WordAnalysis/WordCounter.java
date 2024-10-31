@@ -24,6 +24,11 @@ public class WordCounter {
     }
 
 
+    /**
+     * Count amount of words in an InputStream.
+     * @param text InputStream containing words.
+     * @return the count of words in the input stream.
+     */
     public static long countWords(InputStream text){
         int wordCount = 0;
 

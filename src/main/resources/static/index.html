@@ -1,18 +1,40 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Your first Spring application</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
 </head>
 <body>
-<p><a href="/hello">Greet the world!</a></p>
-
-<form action="/hello" method="GET" id="nameForm">
-    <div>
-        <label for="nameField">How should the app call you?</label>
-        <input name="myName" id="nameField">
-        <button>Greet me!</button>
-    </div>
+<h1>Upload a File to analyze</h1>
+<form id="uploadForm">
+    <input type="file" id="fileInput" name="file" accept=".txt, .csv, .md" required>
+    <button type="submit">Upload</button>
 </form>
+<div id="result"></div>
+
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const fileInput = document.getElementById('fileInput');
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+
+
+        const response = await fetch('/words/count', {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error('An Error occurred when getting results from server.');
+        }
+
+        const result = await response.json();
+        document.getElementById('result').innerText = `Word Count: ${result}`;
+
+    });
+</script>
 </body>
 </html>
