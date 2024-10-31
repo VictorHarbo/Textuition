@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class WordCounter {
@@ -46,4 +47,39 @@ public class WordCounter {
         return wordCount;
     }
 
+
+    /**
+     * Analyze words from the input stream, creating a {@link WordCounterDTO} containing the amount of words in the
+     * stream and information on the longest and shortest word.
+     * @param text stream to analyze.
+     * @return DTO containing results.
+     */
+    public static WordCounterDTO analyzeWords(InputStream text) {
+        WordCounterDTO resultDTO = new WordCounterDTO();
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(text))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Split the line into words using whitespace as the delimiter
+                List<String> words = List.of(line.trim().split("\\s+"));
+
+                words.forEach(word -> updateLongestAndShortestWord(word, resultDTO));
+            }
+        } catch (IOException e) {
+            log.error("An error occurred while analyzing words from posted text: '{}'.", e.getMessage());
+        }
+        return resultDTO;
+    }
+
+    private static void updateLongestAndShortestWord(String word, WordCounterDTO resultDTO) {
+        if (word.length() > resultDTO.longestWord.length()){
+            resultDTO.setLongestWord(word);
+        }
+
+        if (resultDTO.shortestWord.isEmpty() || word.length() < resultDTO.shortestWord.length()){
+            resultDTO.setShortestWord(word);
+        }
+
+        resultDTO.incrementWordCount();
+    }
 }

@@ -27,4 +27,15 @@ public class WordCounterTest {
 
         assertEquals(20, result);
     }
+    @Test
+    public void testWordAnalysis() {
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream text = classLoader.getResourceAsStream("postTestFile.txt");
+
+        WordCounterDTO result = WordCounter.analyzeWords(text);
+
+        assertEquals(20, result.wordCount);
+        assertEquals(8, result.longestWordLength);
+        assertEquals(1, result.shortestWordLength);
+    }
 }
