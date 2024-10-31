@@ -1,11 +1,8 @@
 package com.harbojohnston.textuition.WordAnalysis;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -22,7 +19,7 @@ public class WordCounterTest {
     }
 
     @Test
-    public void testWordCounterInputStream() throws IOException {
+    public void testWordCounterInputStream() {
         ClassLoader classLoader = getClass().getClassLoader();
         InputStream text = classLoader.getResourceAsStream("postTestFile.txt");
 

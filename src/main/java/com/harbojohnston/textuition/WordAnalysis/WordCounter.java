@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.util.stream.Stream;
 
 public class WordCounter {
-    static Logger log = LoggerFactory.getLogger(WordCounter.class);
+    static final Logger log = LoggerFactory.getLogger(WordCounter.class);
 
     /**
      * Count amount of words in a given string of text.
